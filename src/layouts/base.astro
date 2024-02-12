@@ -1,0 +1,82 @@
+---
+export interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+// metaタグのUTF-8を忘れると日本語が文字化けする
+// 参考：https://zenn.dev/jy8752/articles/0b842e7f380fb8#markdown%E3%81%AE%E6%96%87%E5%AD%97%E5%8C%96%E3%81%91%E5%AF%BE%E5%BF%9C
+
+// css周り
+import './../../node_modules/destyle.css/destyle.css';
+// import './../assets/scss/_index.scss'; // 2回ついちゃう,,でもここにかかないと適用されない...
+// import './../../node_modules/swiper/swiper.scss';
+// import '@splidejs/splide/css';
+---
+
+<!doctype html>
+<html lang="jp">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width"
+        />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="/favicon.svg"
+        />
+        <meta
+            name="generator"
+            content={Astro.generator}
+        />
+        <title>{title}</title>
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+        /><link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+        /><link
+            href="https://fonts.googleapis.com/css2?family=Outfit&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,500&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <slot />
+    </body>
+</html>
+
+<script>
+    // 全体で共通のjsはここで呼び出す
+    // 参考：https://zenn.dev/k_neko3/articles/365f03d15d9bef
+    import '@assets/ts/main';
+</script>
