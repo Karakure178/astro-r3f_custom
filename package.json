@@ -13,8 +13,6 @@
     "@astrojs/react": "^3.0.0",
     "@react-three/drei": "^9.80.9",
     "@react-three/fiber": "^8.13.7",
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7",
     "astro": "^3.5.5",
     "gsap": "^3.12.5",
     "react": "^18.2.0",
@@ -25,7 +23,11 @@
     "node": "18.18.0"
   },
   "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
     "destyle.css": "^4.0.1",
-    "style-jsx": "^0.0.0"
+    "eslint": "^8.56.0",
+    "sass": "^1.70.0",
+    "vite-plugin-glsl": "^1.2.1"
   }
 }

@@ -1,6 +1,7 @@
 import { Canvas, useThree } from "@react-three/fiber";
 import { CameraControls, OrbitControls, Stage } from "@react-three/drei";
 import { useEffect, useRef } from "react";
+import "./Fiber.scss";
 // import { EffectComposer, Scanline, Noise } from "@react-three/postprocessing";
 // import { BlendFunction } from "postprocessing";
 // import { Scene } from "./Scene";
@@ -49,7 +50,7 @@ const Scene = () => {
 
 export const Fiber = () => {
   return (
-    <div className="">
+    <div className="container">
       <Canvas
         // onCreated={sceneCreated}
         camera={{ position: [0, 0, 5], fov: 100 }}

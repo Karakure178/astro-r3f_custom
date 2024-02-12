@@ -5,6 +5,7 @@ import { resolve } from 'path';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import react from "@astrojs/react";
+import glsl from 'vite-plugin-glsl';
 
 // https://teno-hira.com/media/?p=1615
 // ES Moduleでは__dirnameがつかえないのでそれ対策
@@ -37,7 +38,8 @@ export default defineConfig({
     compilerOptions: {
         baseUrl: '.',
     },
-    vite: {
+    vite: {    
+        plugins: [glsl()],
         optimizeDeps: {
             exclude: [],
         },

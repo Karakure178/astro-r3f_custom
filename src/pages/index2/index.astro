@@ -1,19 +1,11 @@
 ---
-import Fiber from '../components/Fiber.jsx'
+import Fiber from '@components/r3f/Fiber.jsx';
+import Base from "@layouts/base.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<Fiber client:load/>
-	</body>
-</html>
+		<Base title="Astro">
+			<Fiber client:load/>
+		</Base>
 
 <style>
 	html,
