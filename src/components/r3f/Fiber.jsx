@@ -11,7 +11,9 @@ import "./Fiber.scss";
 
 const Scene = () => {
   const { controls } = useThree();
+
   const meshRef = useRef();
+
   // const sceneCreated = ({ camera }) => {
   //   console.log(camera);
   //   console.log(controls);
@@ -25,6 +27,7 @@ const Scene = () => {
   // };
 
   const margin = 1;
+
   useEffect(() => {
     // console.log(controls);
     // controls.fitToBox(meshRef.current, true, {
@@ -33,6 +36,7 @@ const Scene = () => {
     //   paddingBottom: margin,
     //   paddingRight: margin,
     // });
+
     if (controls) {
       controls.rotateTo(Math.PI / -4, Math.PI / 2.5, true);
     }

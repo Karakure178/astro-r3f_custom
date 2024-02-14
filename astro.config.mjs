@@ -33,6 +33,7 @@ for (let i = 0; i < fileNameList.length; i++) {
 console.log(inputFiles);
 
 // https://astro.build/config
+// https://cumak.net/blog/astro-vite-glslify/
 export default defineConfig({
     integrations: [react()],
     compilerOptions: {

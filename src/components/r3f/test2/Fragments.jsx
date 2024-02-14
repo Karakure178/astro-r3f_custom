@@ -1,15 +1,13 @@
-import fs from './normal.frag';
-import vx from './normal.vert';
-
-const fragmentShader = fs;
-const vertexShader = vx;
-
 import { Vector2, ShaderMaterial } from 'three'
 import { useRef,useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Canvas, useThree } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
+import fs from './normal.frag';
+import vx from './normal.vert';
 
+const fragmentShader = fs;
+const vertexShader = vx;
 
 const material = new ShaderMaterial({
     vertexShader: vertexShader,
