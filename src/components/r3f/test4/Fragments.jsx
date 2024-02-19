@@ -18,6 +18,7 @@ const material = new ShaderMaterial({
     u_time: { type: "f", value: 1.0 },
     u_resolution: { type: "v2", value: new Vector2() },
     u_mouse: { type: "v2", value: new Vector2() },
+    u_boxPosition: { type: "v2", value: new Vector2() },
     // u_texture: {type: "t", value: useLoader(TextureLoader, img) }
   },
 });
@@ -26,11 +27,12 @@ const material = new ShaderMaterial({
 const Scene = () => {
   const { controls } = useThree();
   const meshRef = useRef();
-  const { name, positionX, positionY, positionZ } = useControls({
+  const { name, positionX, positionY, positionZ, boxPosition } = useControls({
     name: "World",
     positionX: 0,
     positionY: 0,
     positionZ: 0,
+    boxPosition: { value: [0.1, 0.1] },
   });
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const Scene = () => {
 
   useFrame(({ clock }) => {
     meshRef.current.material.uniforms.u_time.value = clock.elapsedTime;
+    meshRef.current.material.uniforms.u_boxPosition.value = boxPosition;
   });
   // <CameraControls makeDefault />
 
