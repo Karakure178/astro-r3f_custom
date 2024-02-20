@@ -2,12 +2,9 @@ import { Vector2, ShaderMaterial } from "three";
 import { useRef, useEffect } from "react";
 import { useFrame, Canvas, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
-import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 
 // boxの作成
 export default function Box(props) {
-  // repierの設定を記述する
-
   const meshRef = useRef();
   const { name, positionX, positionY, positionZ, boxPosition } = useControls({
     name: "World",
@@ -25,18 +22,10 @@ export default function Box(props) {
 
   return (
     <>
-      <RigidBody colliders={"cuboid"} restitution={2}>
-        <mesh {...props} ref={meshRef}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color={"orange"} />
-        </mesh>
-      </RigidBody>
-
-      <CuboidCollider
-        position={[0, -2, 0]}
-        args={[20, 0.5, 20]}
-        color={"green"}
-      />
+      <mesh {...props} ref={meshRef}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color={"orange"} />
+      </mesh>
     </>
   );
 }
