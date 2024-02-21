@@ -77,21 +77,33 @@ const Boxes = (props) => {
 const Circles = (props) => {
   const meshRef = useRef();
   const ref = useRef();
+  const { name, positionX, positionY, positionZ, boxPosition } = useControls({
+    name: "World",
+    positionX: 0,
+    positionY: 0,
+    positionZ: 0,
+  });
 
   useFrame(({ clock }) => {
     meshRef.current.position.z = Math.sin(clock.elapsedTime) * 1.3;
-    ref.current.setTranslation({
-      x: 0,
-      y: 0,
-      z: Math.sin(clock.elapsedTime) * 1.3,
-    });
+    ref.current.setTranslation(
+      {
+        x: positionX,
+        y: 0,
+        z: Math.sin(clock.elapsedTime) * 1.3,
+      },
+      true,
+    );
 
     // あたり判定のサイズを変えたいが変え方がさっぱりわからない
     // https://stackoverflow.com/questions/77736702/scaling-a-rigidbody-during-runtime
     // こう？
     // ref.current.setMass(Math.sin(clock.elapsedTime));
 
-    //    console.log(ref.current.setMass(Math.sin(clock.elapsedTime)), ref.current);
+    // ballRef.current.applyImpulse({ x: 0, y: 15, z: 0 })
+    // https://codesandbox.io/p/devbox/game-lmu0pf?file=%2Fsrc%2FBall.jsx%3A36%2C64
+
+    //console.log(ref.current.setMass(Math.sin(clock.elapsedTime)), ref.current);
 
     // ref.current.setScale({
     //   x: 0,
@@ -107,10 +119,11 @@ const Circles = (props) => {
           args={[1, 159]}
           rotation={[-Math.PI / 2, 0, 0]}
           ref={meshRef}
+          position={[positionX, 0, 0]}
         ></Circle>
         <CuboidCollider
           args={[0.8, 0.1, 0.8]}
-          position={[0, 0, 0]}
+          position={[positionX, 0, 0]}
           ref={ref}
           {...props}
           sensor
@@ -164,7 +177,7 @@ export default function Fragments() {
           </RigidBody> */}
           <Circles position={[0, 0, 0]} />
 
-          {/* <Boxes position={[0, 0, 0]} /> */}
+          <Boxes position={[0, 0, -1]} />
         </Physics>
       </Canvas>
     </div>
