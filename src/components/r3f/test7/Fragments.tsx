@@ -1,10 +1,30 @@
-import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
+// 実装参考
+/**
+ * 背景色/シャドウ回り,静的物体(床)の設定
+ * https://codesandbox.io/p/sandbox/bruno-simons-20k-challenge-857z1i?file=%2Fsrc%2FApp.js%3A6%2C45-6%2C67
+ *
+ * シャドウ
+ * https://codesandbox.io/p/sandbox/baking-soft-shadows-hxcc1x?file=%2Fsrc%2FApp.js%3A21%2C43
+ */
+
+import {
+  Physics,
+  RigidBody,
+  CuboidCollider,
+  InstancedRigidBodies,
+} from "@react-three/rapier";
 
 import { useRef, useEffect } from "react";
 import { useFrame, Canvas, useThree } from "@react-three/fiber";
 
 import { useControls } from "leva";
-import { CameraControls, Box, Sphere, Circle } from "@react-three/drei";
+import {
+  CameraControls,
+  MeshTransmissionMaterial,
+  Environment,
+  AccumulativeShadows,
+  RandomizedLight,
+} from "@react-three/drei";
 import "./Fragments.scss";
 
 // シーンを設定する
@@ -43,9 +63,18 @@ const Boxes = (props) => {
 
   return (
     <>
-      <RigidBody {...props.type} {...props.restitution}>
-        <mesh {...props} ref={meshRef}>
+      {/* <mesh position={[0.0, 1, 0.0]} castShadow>
+        <boxGeometry args={[0.8, 0.8, 0.8]} />
+        <meshStandardMaterial color={"orange"} />
+      </mesh> */}
+      <RigidBody mass={10}>
+        <mesh {...props} ref={meshRef} castShadow>
           <boxGeometry args={[1, 1, 1]} />
+          <MeshTransmissionMaterial transmissionSampler />
+        </mesh>
+
+        <mesh {...props} receiveShadow castShadow>
+          <boxGeometry args={[0.5, 0.5, 0.5]} />
           <meshStandardMaterial color={"orange"} />
         </mesh>
       </RigidBody>
@@ -59,9 +88,9 @@ const Enemy = ({ position, color }) => (
     colliders="cuboid"
     type="fixed"
     position={position}
-    restitution={2.1}
+    restitution={0.1}
   >
-    <mesh>
+    <mesh castShadow>
       <boxGeometry args={[10, 0.5, 10]} />
       <meshStandardMaterial color={color} />
     </mesh>
@@ -86,6 +115,7 @@ export default function Fragments() {
   return (
     <div className="container">
       <Canvas
+        shadows
         camera={{
           fov: 50,
           aspect: 1,
@@ -94,21 +124,40 @@ export default function Fragments() {
           position: [0, 0, 10],
         }}
       >
-        <ambientLight intensity={Math.PI / 2} />
-        <spotLight
-          position={[10, 10, 10]}
-          angle={0.15}
-          penumbra={1}
-          decay={0}
-          intensity={Math.PI}
-        />
-        <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
+        {/* 背景色を決める */}
+        <color attach="background" args={["#f0f0f0"]} />
+
         <Scene />
 
-        <Physics gravity={[0, -30, 0]} colliders="cuboid" debug>
+        <Physics gravity={[0, -30, 0]} colliders="cuboid">
           <Boxes position={[0, 3, 0]} />
-          <Enemy color="hotpink" position={[0, 0, 0]} />
+          {/* <Enemy color="hotpink" position={[0, 0, 0]} /> */}
+
+          <RigidBody position={[0, -1, 0]} type="fixed" colliders="false">
+            <CuboidCollider restitution={0.1} args={[1000, 1, 1000]} />
+          </RigidBody>
         </Physics>
+
+        <AccumulativeShadows
+          temporal
+          frames={100}
+          color="orange"
+          colorBlend={2}
+          toneMapped={true}
+          alphaTest={0.75}
+          opacity={2}
+          scale={12}
+        >
+          <RandomizedLight
+            intensity={Math.PI}
+            amount={8}
+            radius={4}
+            ambient={0.5}
+            position={[5, 5, -10]}
+            bias={0.001}
+          />
+        </AccumulativeShadows>
+        <Environment preset="city" />
       </Canvas>
     </div>
   );
