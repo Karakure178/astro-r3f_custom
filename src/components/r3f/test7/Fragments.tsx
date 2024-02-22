@@ -3,19 +3,18 @@
  * 背景色/シャドウ回り,静的物体(床)の設定
  * https://codesandbox.io/p/sandbox/bruno-simons-20k-challenge-857z1i?file=%2Fsrc%2FApp.js%3A6%2C45-6%2C67
  *
- * シャドウ
+ * シャドウ(結構遅めに反映されるやつ)
  * https://codesandbox.io/p/sandbox/baking-soft-shadows-hxcc1x?file=%2Fsrc%2FApp.js%3A21%2C43
+ *
+ * マテリアル系
+ * https://codesandbox.io/p/sandbox/multi-select-edges-ny3p4?file=%2Fsrc%2FApp.js%3A19%2C57
  */
 
-import {
-  Physics,
-  RigidBody,
-  CuboidCollider,
-  InstancedRigidBodies,
-} from "@react-three/rapier";
+import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 
 import { useRef, useEffect } from "react";
 import { useFrame, Canvas, useThree } from "@react-three/fiber";
+import { map } from "@assets/ts/libs/map";
 
 import { useControls } from "leva";
 import {
@@ -31,13 +30,13 @@ import "./Fragments.scss";
 const Scene = () => {
   const { controls } = useThree();
   const meshRef = useRef();
-  const { name, positionX, positionY, positionZ, boxPosition } = useControls({
-    name: "World",
-    positionX: 0,
-    positionY: 0,
-    positionZ: 0,
-    boxPosition: { value: [0.1, 0.1] },
-  });
+  // const { name, positionX, positionY, positionZ, boxPosition } = useControls({
+  //   name: "World",
+  //   positionX: 0,
+  //   positionY: 0,
+  //   positionZ: 0,
+  //   boxPosition: { value: [0.1, 0.1] },
+  // });
 
   useEffect(() => {
     if (controls) {
@@ -67,7 +66,7 @@ const Boxes = (props) => {
         <boxGeometry args={[0.8, 0.8, 0.8]} />
         <meshStandardMaterial color={"orange"} />
       </mesh> */}
-      <RigidBody mass={10}>
+      <RigidBody mass={1}>
         <mesh {...props} ref={meshRef} castShadow>
           <boxGeometry args={[1, 1, 1]} />
           <MeshTransmissionMaterial transmissionSampler />
@@ -75,41 +74,45 @@ const Boxes = (props) => {
 
         <mesh {...props} receiveShadow castShadow>
           <boxGeometry args={[0.5, 0.5, 0.5]} />
-          <meshStandardMaterial color={"orange"} />
+
+          <MeshTransmissionMaterial
+            color={"orange"}
+            resolution={1024}
+            samples={16}
+            thickness={1}
+            roughness={0.5}
+            envMapIntensity={1}
+            transmission={1}
+          />
         </mesh>
       </RigidBody>
     </>
   );
 };
 
-// 床
-const Enemy = ({ position, color }) => (
-  <RigidBody
-    colliders="cuboid"
-    type="fixed"
-    position={position}
-    restitution={0.1}
-  >
-    <mesh castShadow>
-      <boxGeometry args={[10, 0.5, 10]} />
-      <meshStandardMaterial color={color} />
-    </mesh>
-  </RigidBody>
-);
-
+// 本体
 export default function Fragments() {
-  const meshRef = useRef();
+  // const meshRef = useRef();
+  const num = 10;
   const positions = [
-    [0, 0, 0],
-    [2, 0, 0],
-    [0, 2, 0],
-    [0, 0, 2],
+    [0, 12, 0],
+    [2, 9, 0],
+    [4, 10, 0],
+    [0, 13, 2],
   ];
-  const scales = [0.1, 0.2, 0.3, 0.4];
 
-  // const list = positions.map((position, index) => (
-  //   <Box position={position} scales={scales[index]} />
-  // ));
+  // positionsをここで設定する
+  for (let i = 0; i < num; i++) {
+    positions.push([
+      map(Math.random(), 0, 1, 0, 1),
+      map(Math.random(), 0, 1, 8, 10),
+      Math.random(),
+    ]);
+  }
+
+  const list = positions.map((position, index) => (
+    <Boxes position={position} />
+  ));
   // https://devsakaso.com/react-control-syntax/
 
   return (
@@ -124,36 +127,47 @@ export default function Fragments() {
           position: [0, 0, 10],
         }}
       >
+        <directionalLight
+          position={[-10, 10, 5]}
+          shadow-mapSize={[256, 256]}
+          shadow-bias={-0.0001}
+          castShadow
+        >
+          <orthographicCamera
+            attach="shadow-camera"
+            args={[-10, 10, -10, 10]}
+          />
+        </directionalLight>
         {/* 背景色を決める */}
         <color attach="background" args={["#f0f0f0"]} />
 
         <Scene />
 
         <Physics gravity={[0, -30, 0]} colliders="cuboid">
-          <Boxes position={[0, 3, 0]} />
-          {/* <Enemy color="hotpink" position={[0, 0, 0]} /> */}
+          {/* <Boxes position={[0, 10, 0]} /> */}
+          {list}
 
           <RigidBody position={[0, -1, 0]} type="fixed" colliders="false">
-            <CuboidCollider restitution={0.1} args={[1000, 1, 1000]} />
+            <CuboidCollider restitution={0.01} args={[1000, 1, 1000]} />
           </RigidBody>
         </Physics>
 
         <AccumulativeShadows
           temporal
-          frames={100}
-          color="orange"
-          colorBlend={2}
-          toneMapped={true}
-          alphaTest={0.75}
-          opacity={2}
-          scale={12}
+          frames={Infinity}
+          alphaTest={1}
+          blend={200}
+          limit={1500}
+          scale={25}
+          position={[0, -0.05, 0]}
         >
           <RandomizedLight
-            intensity={Math.PI}
-            amount={8}
-            radius={4}
+            amount={1}
+            mapSize={512}
+            radius={5}
             ambient={0.5}
-            position={[5, 5, -10]}
+            position={[-10, 10, 5]}
+            size={10}
             bias={0.001}
           />
         </AccumulativeShadows>
