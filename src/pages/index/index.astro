@@ -1,10 +1,39 @@
 ---
-import Fiber from "@components/r3f/test3/Fragments.tsx";
 import Base from "@layouts/base.astro";
+import AnkerLink from "@components/ui/ankerlink/AnkerLink.tsx";
+
+const link_list = [
+  {
+    title: "最初のページ",
+    href: "/index",
+  },
+  {
+    title: "フラグメントシェーダー系テスト",
+    href: "/index2",
+  },
+  {
+    title: "rapierをコンポーネントごとにまとめたパターン",
+    href: "/test_shader",
+  },
+  {
+    title: "マテリアルチートシート",
+    href: "/test_shader2",
+  },
+];
 ---
 
 <Base title="Astro">
-  <Fiber client:only />
+  <div>
+    <ul class="ankerLink__list">
+      {
+        link_list.map((link) => (
+          <li class="ankerLink__item">
+            <AnkerLink href={link.href} text={link.title} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </Base>
 
 <style>
@@ -16,5 +45,30 @@ import Base from "@layouts/base.astro";
     margin: 0;
     padding: 0;
     background: #2b2b33;
+  }
+
+  .ankerLink__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding-top: 100px;
+    gap: 10px;
+  }
+
+  .ankerLink__item {
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      transition: 0.3s;
+      &:hover {
+        color: #ff0;
+      }
+    }
   }
 </style>
