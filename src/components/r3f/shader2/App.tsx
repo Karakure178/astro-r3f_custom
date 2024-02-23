@@ -1,31 +1,23 @@
 // 実装参考
 /**
- * 背景色/シャドウ回り,静的物体(床)の設定
- * https://codesandbox.io/p/sandbox/bruno-simons-20k-challenge-857z1i?file=%2Fsrc%2FApp.js%3A6%2C45-6%2C67
- *
- * シャドウ(結構遅めに反映されるやつ)
- * https://codesandbox.io/p/sandbox/baking-soft-shadows-hxcc1x?file=%2Fsrc%2FApp.js%3A21%2C43
- *
- * マテリアル系
- * https://codesandbox.io/p/sandbox/multi-select-edges-ny3p4?file=%2Fsrc%2FApp.js%3A19%2C57
- *
- * オブジェクトに対する配列回り：
- * https://devsakaso.com/react-control-syntax/
  *
  */
 
 import { useRef, useEffect } from "react";
 import { useFrame, Canvas, useThree } from "@react-three/fiber";
-import { map } from "@assets/ts/libs/map";
-
 import { useControls } from "leva";
 import { CameraControls, Environment, SoftShadows } from "@react-three/drei";
 
+import { map } from "@assets/ts/libs/map";
 import "./Fragments.scss";
 
+// 以下、各種オブジェクトのインポート
+import World from "./background/World";
 import Box1 from "./mat/Box1";
 import Box2 from "./mat/Box2";
 import Box3 from "./mat/Box3";
+import Box4 from "./mat/Box4";
+import Box5 from "./mat/Box5";
 
 // シーンを設定する
 const Scene = () => {
@@ -79,25 +71,6 @@ const Scene = () => {
 
 // 本体
 export default function App() {
-  // const opsions = "orange";
-  // const num = 1;
-  // const positions = [
-  //   [0, 12, 0],
-  //   [2, 9, 0],
-  //   [4, 10, 0],
-  //   [0, 13, 2],
-  // ];
-
-  // // positionsをここで設定する
-  // for (let i = 0; i < num; i++) {
-  //   positions.push([
-  //     map(Math.random(), 0, 1, 0, 1),
-  //     map(Math.random(), 0, 1, 8, 10),
-  //     Math.random(),
-  //   ]);
-  // }
-  //const list = positions.map((position, index) => ());
-
   return (
     <div className="container">
       <Canvas
@@ -113,14 +86,21 @@ export default function App() {
         <Scene />
 
         {/* 以下  通常の配置計算 */}
+        <World />
         {/* 反射強め系 */}
-        <Box1 position={[0, 0, 0]} objectName={{ name: "box1" }}></Box1>
+        <Box1 position={[0, 0.5, 0]} objectName={{ name: "box1" }}></Box1>
 
         {/* すりガラス系 */}
-        <Box2 position={[1.5, 0, 0]} objectName={{ name: "box2" }} />
+        <Box2 position={[1.5, 0.5, 0]} objectName={{ name: "box2" }} />
 
         {/* プラスチック系 */}
-        <Box3 position={[3, 0, 0]} objectName={{ name: "box3" }} />
+        <Box3 position={[3, 0.5, 0]} objectName={{ name: "box3" }} />
+
+        {/* sample系 */}
+        <Box4 position={[4.5, 0.5, 0]} objectName={{ name: "box4" }} />
+
+        {/* 反射がきれい系 */}
+        <Box5 position={[6, 0.5, 0]} objectName={{ name: "box5" }} />
       </Canvas>
     </div>
   );
