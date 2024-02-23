@@ -1,6 +1,6 @@
-/** boxを使ったシェーダーテスト関数2
+/** boxを使ったシェーダーテスト関数3
  * 実装参考：
- * すりガラスっぽい質感を使った
+ * プラスチックっぽい質感を使った
  * このboxに使ったシェーダー回り：
  * https://codesandbox.io/p/sandbox/multi-select-edges-ny3p4?file=%2Fsrc%2FApp.js%3A36%2C7-36%2C84
  */
@@ -10,7 +10,7 @@ import { useControls } from "leva";
 import { useMemo, useRef, useEffect } from "react";
 
 // boxの作成
-export default function Box2({ objectName, ...props }) {
+export default function Box3({ objectName, ...props }) {
   const ref = useRef();
   const options = useMemo(() => {
     return {
@@ -31,7 +31,7 @@ export default function Box2({ objectName, ...props }) {
       ry: { value: 0, min: -Math.PI / 2, max: Math.PI * 2, step: 0.01 },
       rz: { value: 0, min: -Math.PI / 2, max: Math.PI * 2, step: 0.01 },
       size: { value: 1, min: 0, max: Math.PI * 2, step: 0.01 },
-      color: { value: "orange" },
+      color: { value: "aquamarine" },
     };
   }, []);
 
@@ -55,7 +55,8 @@ export default function Box2({ objectName, ...props }) {
         thickness={1}
         roughness={0.5}
         envMapIntensity={1}
-        transmission={1}
+        transmission={0}
+        metalness={0}
       />
     </mesh>
   );

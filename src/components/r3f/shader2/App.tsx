@@ -25,6 +25,7 @@ import "./Fragments.scss";
 
 import Box1 from "./mat/Box1";
 import Box2 from "./mat/Box2";
+import Box3 from "./mat/Box3";
 
 // シーンを設定する
 const Scene = () => {
@@ -78,24 +79,23 @@ const Scene = () => {
 
 // 本体
 export default function App() {
-  const opsions = "orange";
-  const num = 1;
-  const positions = [
-    [0, 12, 0],
-    [2, 9, 0],
-    [4, 10, 0],
-    [0, 13, 2],
-  ];
+  // const opsions = "orange";
+  // const num = 1;
+  // const positions = [
+  //   [0, 12, 0],
+  //   [2, 9, 0],
+  //   [4, 10, 0],
+  //   [0, 13, 2],
+  // ];
 
-  // positionsをここで設定する
-  for (let i = 0; i < num; i++) {
-    positions.push([
-      map(Math.random(), 0, 1, 0, 1),
-      map(Math.random(), 0, 1, 8, 10),
-      Math.random(),
-    ]);
-  }
-
+  // // positionsをここで設定する
+  // for (let i = 0; i < num; i++) {
+  //   positions.push([
+  //     map(Math.random(), 0, 1, 0, 1),
+  //     map(Math.random(), 0, 1, 8, 10),
+  //     Math.random(),
+  //   ]);
+  // }
   //const list = positions.map((position, index) => ());
 
   return (
@@ -111,13 +111,16 @@ export default function App() {
         }}
       >
         <Scene />
-        {/* 以下  通常の配置計算 */}
 
+        {/* 以下  通常の配置計算 */}
         {/* 反射強め系 */}
         <Box1 position={[0, 0, 0]} objectName={{ name: "box1" }}></Box1>
 
         {/* すりガラス系 */}
         <Box2 position={[1.5, 0, 0]} objectName={{ name: "box2" }} />
+
+        {/* プラスチック系 */}
+        <Box3 position={[3, 0, 0]} objectName={{ name: "box3" }} />
       </Canvas>
     </div>
   );
