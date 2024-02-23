@@ -26,7 +26,7 @@ const Scene = () => {
       u_time: { type: "f", value: 1.0 },
       u_resolution: { type: "v2", value: new Vector2() },
       u_mouse: { type: "v2", value: new Vector2() },
-      // u_texture: { type: "t", value: tex },
+      u_texture: { type: "t", value: tex },
     },
   });
 
@@ -49,13 +49,10 @@ const Scene = () => {
   );
 };
 
-export default function Fragments() {
+export default function App() {
   return (
     <div className="container">
-      <Canvas
-        // onCreated={sceneCreated}
-        camera={{ position: [0, 0, 3], fov: 100 }}
-      >
+      <Canvas camera={{ position: [0, 0, 3], fov: 100 }}>
         <Scene />
       </Canvas>
     </div>

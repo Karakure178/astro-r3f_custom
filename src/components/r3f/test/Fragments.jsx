@@ -1,26 +1,25 @@
-import fs from './normal.frag';
-import vx from './normal.vert';
+import fs from "./normal.frag";
+import vx from "./normal.vert";
 
 const fragmentShader = fs;
 const vertexShader = vx;
 
-import { Vector2, ShaderMaterial } from 'three'
-import { useRef,useEffect } from 'react'
-import { useFrame } from '@react-three/fiber'
-import { Canvas, useThree } from "@react-three/fiber";
+import { Vector2, ShaderMaterial } from "three";
+import { useRef, useEffect } from "react";
+import { useFrame, Canvas, useThree } from "@react-three/fiber";
+
 import { CameraControls } from "@react-three/drei";
 
-
 const material = new ShaderMaterial({
-    vertexShader: vertexShader,
-    fragmentShader: fragmentShader,
-    uniforms: {
-        u_time: { type: "f", value: 1.0 },
-        u_resolution: { type: "v2", value: new Vector2() },
-        u_mouse: { type: "v2", value: new Vector2() },
-        // u_texture: {type: "t", value: useLoader(TextureLoader, img) }
-    }
-})
+  vertexShader: vertexShader,
+  fragmentShader: fragmentShader,
+  uniforms: {
+    u_time: { type: "f", value: 1.0 },
+    u_resolution: { type: "v2", value: new Vector2() },
+    u_mouse: { type: "v2", value: new Vector2() },
+    // u_texture: {type: "t", value: useLoader(TextureLoader, img) }
+  },
+});
 
 const Scene = () => {
   const { controls } = useThree();
@@ -32,20 +31,20 @@ const Scene = () => {
     }
   }, [controls]);
 
-  useFrame(({clock}) => {
-    meshRef.current.material.uniforms.u_time.value = clock.elapsedTime
-})
+  useFrame(({ clock }) => {
+    meshRef.current.material.uniforms.u_time.value = clock.elapsedTime;
+  });
   return (
     <>
-    <mesh ref={meshRef} material={material} >
+      <mesh ref={meshRef} material={material}>
         <boxGeometry args={[2, 2, 0.9]} />
-    </mesh>
+      </mesh>
       <CameraControls makeDefault />
     </>
   );
 };
 
-export default function Fragments(){
+export default function Fragments() {
   return (
     <div className="container">
       <Canvas
@@ -56,5 +55,4 @@ export default function Fragments(){
       </Canvas>
     </div>
   );
-};
-
+}
