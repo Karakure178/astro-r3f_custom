@@ -18,6 +18,7 @@ import Box2 from "./mat/Box2";
 import Box3 from "./mat/Box3";
 import Box4 from "./mat/Box4";
 import Box5 from "./mat/Box5";
+import Box6 from "./mat/Box6";
 
 // シーンを設定する
 const Scene = () => {
@@ -101,6 +102,9 @@ export default function App() {
 
         {/* 反射がきれい系 */}
         <Box5 position={[6, 0.5, 0]} objectName={{ name: "box5" }} />
+
+        {/* box2とbox5のあいのこ系 */}
+        <Box6 position={[7.5, 0.5, 0]} objectName={{ name: "box6" }} />
       </Canvas>
     </div>
   );
