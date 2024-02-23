@@ -1,9 +1,16 @@
-// 物理演算の世界を作る
+/** 物理演算の世界を作る関数
+ * 実装参考：
+ * 当たり判定固定(静的)回り：
+ * https://codesandbox.io/p/sandbox/bruno-simons-20k-challenge-857z1i?file=%2Fsrc%2FApp.js
+ * https://codesandbox.io/p/sandbox/pensive-drake-66cd7?
+ *
+ * vueのslot的なことをやる：
+ * https://blog.capilano-fw.com/?p=11118
+ *
+ *
+ */
+
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
-
-import { useRef, useEffect } from "react";
-import { useFrame, Canvas, useThree } from "@react-three/fiber";
-
 import { useControls } from "leva";
 import { ComponentSlot } from "@components/common/helper/Componentslot";
 

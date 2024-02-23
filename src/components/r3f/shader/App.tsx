@@ -8,9 +8,13 @@
  *
  * マテリアル系
  * https://codesandbox.io/p/sandbox/multi-select-edges-ny3p4?file=%2Fsrc%2FApp.js%3A19%2C57
+ *
+ * オブジェクトに対する配列回り：
+ * https://devsakaso.com/react-control-syntax/
+ *
  */
 
-import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
+import { RigidBody } from "@react-three/rapier";
 
 import { useRef, useEffect } from "react";
 import { useFrame, Canvas, useThree } from "@react-three/fiber";
@@ -26,6 +30,7 @@ import {
 
 import WhiteShape from "./Box";
 import World from "./background/World";
+import Boxes2 from "./rapier/Boxes";
 
 import "./Fragments.scss";
 
@@ -74,48 +79,9 @@ const Scene = () => {
   );
 };
 
-// box あたり判定
-const Boxes = (props) => {
-  // const meshRef = useRef();
-
-  useFrame(({ clock }) => {});
-
-  return (
-    <>
-      {/* <mesh position={[0.0, 1, 0.0]} castShadow>
-        <boxGeometry args={[0.8, 0.8, 0.8]} />
-        <meshStandardMaterial color={"orange"} />
-      </mesh> */}
-      <RigidBody mass={1}>
-        <group scale={[0.3, 0.3, 0.3]}>
-          <mesh {...props} castShadow>
-            <boxGeometry args={[1, 1, 1]} />
-            <MeshTransmissionMaterial transmissionSampler />
-          </mesh>
-
-          <mesh {...props} receiveShadow castShadow>
-            <boxGeometry args={[0.5, 0.5, 0.5]} />
-
-            <MeshTransmissionMaterial
-              color={"orange"}
-              resolution={1024}
-              samples={16}
-              thickness={1}
-              roughness={0.5}
-              envMapIntensity={1}
-              transmission={1}
-            />
-          </mesh>
-        </group>
-      </RigidBody>
-    </>
-  );
-};
-
 // 本体
 export default function App() {
-  const { debug } = useControls({ debug: false });
-
+  const opsions = "orange";
   const num = 1;
   const positions = [
     [0, 12, 0],
@@ -134,9 +100,8 @@ export default function App() {
   }
 
   const list = positions.map((position, index) => (
-    <Boxes position={position} />
+    <Boxes2 position={position} colors={opsions} />
   ));
-  // https://devsakaso.com/react-control-syntax/
 
   return (
     <div className="container">
@@ -151,34 +116,18 @@ export default function App() {
         }}
       >
         <Scene />
+
+        {/* 物理演算する場合の記載はこちら(床付き) */}
         <World>
           <template slot="object">
-            <Boxes position={[0, 10, 0]} />
+            <Boxes2 position={[0, 10, 0]} colors={opsions} />
+
+            {/* box(boolean使用) */}
+            <WhiteShape position={[0, 0.4, 0]} />
           </template>
         </World>
 
-        {/* 以下物理演算 */}
-        {/* <Physics gravity={[0, -30, 0]} colliders="cuboid" debug={debug}> */}
-        {/* <Boxes position={[0, 10, 0]} /> */}
-        {/* {list} */}
-
-        {/* <RigidBody position={[0, -1, 0]} type="fixed" colliders="false">
-            <CuboidCollider restitution={0.01} args={[1000, 1, 1000]} />
-          </RigidBody> */}
-
-        {/* box(boolean使用) */}
-        {/* <WhiteShape position={[0, 0.4, 0]} />
-        </Physics> */}
-
-        {/* なぜか以下がないと影が描画されない */}
-        <mesh
-          rotation={[-Math.PI / 2, 0, 0]}
-          position={[0, -0, 0]}
-          receiveShadow
-        >
-          <planeGeometry args={[100, 100]} />
-          <shadowMaterial transparent opacity={0.4} />
-        </mesh>
+        {/* 以下  通常の配置計算 */}
       </Canvas>
     </div>
   );
