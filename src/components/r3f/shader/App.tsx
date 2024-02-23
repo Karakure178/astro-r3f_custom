@@ -25,6 +25,7 @@ import {
 } from "@react-three/drei";
 
 import WhiteShape from "./Box";
+import World from "./background/World";
 
 import "./Fragments.scss";
 
@@ -75,7 +76,7 @@ const Scene = () => {
 
 // box あたり判定
 const Boxes = (props) => {
-  const meshRef = useRef();
+  // const meshRef = useRef();
 
   useFrame(({ clock }) => {});
 
@@ -87,7 +88,7 @@ const Boxes = (props) => {
       </mesh> */}
       <RigidBody mass={1}>
         <group scale={[0.3, 0.3, 0.3]}>
-          <mesh {...props} ref={meshRef} castShadow>
+          <mesh {...props} castShadow>
             <boxGeometry args={[1, 1, 1]} />
             <MeshTransmissionMaterial transmissionSampler />
           </mesh>
@@ -150,19 +151,24 @@ export default function App() {
         }}
       >
         <Scene />
+        <World>
+          <template slot="object">
+            <Boxes position={[0, 10, 0]} />
+          </template>
+        </World>
 
         {/* 以下物理演算 */}
-        <Physics gravity={[0, -30, 0]} colliders="cuboid" debug={debug}>
-          {/* <Boxes position={[0, 10, 0]} /> */}
-          {list}
+        {/* <Physics gravity={[0, -30, 0]} colliders="cuboid" debug={debug}> */}
+        {/* <Boxes position={[0, 10, 0]} /> */}
+        {/* {list} */}
 
-          <RigidBody position={[0, -1, 0]} type="fixed" colliders="false">
+        {/* <RigidBody position={[0, -1, 0]} type="fixed" colliders="false">
             <CuboidCollider restitution={0.01} args={[1000, 1, 1000]} />
-          </RigidBody>
+          </RigidBody> */}
 
-          {/* box(boolean使用) */}
-          <WhiteShape position={[0, 0.4, 0]} />
-        </Physics>
+        {/* box(boolean使用) */}
+        {/* <WhiteShape position={[0, 0.4, 0]} />
+        </Physics> */}
 
         {/* なぜか以下がないと影が描画されない */}
         <mesh
