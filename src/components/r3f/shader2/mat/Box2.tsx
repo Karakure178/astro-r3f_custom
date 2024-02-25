@@ -30,7 +30,9 @@ export default function Box2({ objectName, ...props }) {
       },
       ry: { value: 0, min: -Math.PI / 2, max: Math.PI * 2, step: 0.01 },
       rz: { value: 0, min: -Math.PI / 2, max: Math.PI * 2, step: 0.01 },
-      size: { value: 1, min: 0, max: Math.PI * 2, step: 0.01 },
+      sx: { value: 1, min: 0, max: Math.PI * 2, step: 0.01 },
+      sy: { value: 1, min: 0, max: Math.PI * 2, step: 0.01 },
+      sz: { value: 1, min: 0, max: Math.PI * 2, step: 0.01 },
       color: { value: "orange" },
     };
   }, []);
@@ -45,7 +47,7 @@ export default function Box2({ objectName, ...props }) {
       ref={ref}
       position={[pBase.x, pBase.y, pBase.z]}
       rotation={[pBase.rx, pBase.ry, pBase.rz]}
-      scale={[pBase.size, pBase.size, pBase.size]}
+      scale={[pBase.sx, pBase.sy, pBase.sz]}
     >
       <boxGeometry args={[1, 1, 1]} />
       <MeshTransmissionMaterial

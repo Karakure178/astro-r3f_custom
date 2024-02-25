@@ -1,13 +1,13 @@
-/** boxを使ったシェーダーテスト関数6
- * box2とbox5の設定のあいのこ
+/** boxを使ったシェーダーテスト関数7
+ * 曇りガラステスト
  */
 
 import { MeshTransmissionMaterial } from "@react-three/drei";
 import { useControls } from "leva";
-import { useMemo, useRef, useEffect } from "react";
+import { useMemo, useRef } from "react";
 
 // boxの作成
-export default function Box4({ objectName, ...props }) {
+export default function Box7({ objectName, ...props }) {
   const ref = useRef();
   const options = useMemo(() => {
     return {
@@ -27,10 +27,8 @@ export default function Box4({ objectName, ...props }) {
       },
       ry: { value: 0, min: -Math.PI / 2, max: Math.PI * 2, step: 0.01 },
       rz: { value: 0, min: -Math.PI / 2, max: Math.PI * 2, step: 0.01 },
-      sx: { value: 1, min: 0, max: Math.PI * 2, step: 0.01 },
-      sy: { value: 1, min: 0, max: Math.PI * 2, step: 0.01 },
-      sz: { value: 1, min: 0, max: Math.PI * 2, step: 0.01 },
-      color: { value: "#4173c687" },
+      size: { value: 0.01, min: 0, max: Math.PI * 2, step: 0.01 },
+      color: { value: "fff" },
     };
   }, []);
 
@@ -44,30 +42,28 @@ export default function Box4({ objectName, ...props }) {
       ref={ref}
       position={[pBase.x, pBase.y, pBase.z]}
       rotation={[pBase.rx, pBase.ry, pBase.rz]}
-      scale={[pBase.sx, pBase.sy, pBase.sz]}
+      scale={[0.01, 0.01, 0.01]}
     >
-      <boxGeometry args={[1, 1, 1]} />
+      <boxGeometry args={[5, 100, 100]} />
       <MeshTransmissionMaterial
-        transmissionSampler={false}
-        backside={true}
-        backsideThickness={2}
-        resolution={1024}
-        backsideResolution={512}
-        transmission={1}
-        ior={1.5}
-        chromaticAberration={0.4}
-        anisotropy={0.3}
-        distortion={0.0}
-        distortionScale={0.3}
-        temporalDistortion={0.65}
-        attenuationDistance={0.5}
-        clearcoat={0}
-        attenuationColor={"#ffffff"}
         color={pBase.color}
-        samples={10}
-        thickness={0.5}
-        roughness={0.2}
-        envMapIntensity={1}
+        backside={false}
+        samples={16}
+        resolution={256}
+        transmission={0.95}
+        roughness={0.5}
+        clearcoat={0.1}
+        clearcoatRoughness={0.1}
+        thickness={200}
+        backsideThickness={200}
+        ior={1.5}
+        chromaticAberration={1}
+        anisotropy={1}
+        distortion={0}
+        distortionScale={0.2}
+        temporalDistortion={0}
+        attenuationDistance={0.5}
+        attenuationColor="#ffffff"
       />
     </mesh>
   );

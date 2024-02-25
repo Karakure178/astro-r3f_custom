@@ -6,9 +6,14 @@
 import { useRef, useEffect } from "react";
 import { useFrame, Canvas, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
-import { CameraControls, Environment, SoftShadows } from "@react-three/drei";
+import {
+  CameraControls,
+  Environment,
+  SoftShadows,
+  Lightformer,
+  OrbitControls,
+} from "@react-three/drei";
 
-import { map } from "@assets/ts/libs/map";
 import "./Fragments.scss";
 
 // 以下、各種オブジェクトのインポート
@@ -19,10 +24,10 @@ import Box3 from "./mat/Box3";
 import Box4 from "./mat/Box4";
 import Box5 from "./mat/Box5";
 import Box6 from "./mat/Box6";
+import Box7 from "./mat/Box7";
 
 // シーンを設定する
 const Scene = () => {
-  const { controls } = useThree();
   const { enabled, ...config } = useControls({
     enabled: true,
     size: { value: 25, min: 0, max: 100 },
@@ -30,18 +35,11 @@ const Scene = () => {
     samples: { value: 10, min: 1, max: 20, step: 1 },
   });
 
-  useEffect(() => {
-    if (controls) {
-      controls.rotateTo(Math.PI / -4, Math.PI / 2.5, true);
-    }
-  }, [controls]);
-
-  useFrame(({ clock }) => {});
-
   return (
     <>
       {/* 背景色を決める */}
-      <color attach="background" args={["#f0f0f0"]} />
+      <color attach="background" args={["#fef4ef"]} />
+      <OrbitControls makeDefault />
       <ambientLight intensity={0.5} />
       <directionalLight
         castShadow
@@ -58,8 +56,8 @@ const Scene = () => {
       <pointLight position={[0, -10, 0]} intensity={1} />
       <CameraControls makeDefault />
 
-      {enabled && <SoftShadows {...config} />}
-      <fog attach="fog" args={["black", 0, 40]} />
+      {/* {enabled && <SoftShadows {...config} />} */}
+      {/* <fog attach="fog" args={["black", 0, 40]} /> */}
       {/* <Environment preset="city" /> */}
       <Environment
         files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/dancing_hall_1k.hdr"
@@ -74,16 +72,7 @@ const Scene = () => {
 export default function App() {
   return (
     <div className="container">
-      <Canvas
-        shadows
-        camera={{
-          fov: 50,
-          aspect: 1,
-          near: 0.01,
-          far: 1000,
-          position: [0, 0, 10],
-        }}
-      >
+      <Canvas orthographic shadows camera={{ position: [6, -5, 10], zoom: 60 }}>
         <Scene />
 
         {/* 以下  通常の配置計算 */}
@@ -105,6 +94,7 @@ export default function App() {
 
         {/* box2とbox5のあいのこ系 */}
         <Box6 position={[7.5, 0.5, 0]} objectName={{ name: "box6" }} />
+        <Box7 position={[9, 0.5, 0]} objectName={{ name: "box7" }} />
       </Canvas>
     </div>
   );
