@@ -19,9 +19,9 @@ export default function boxBool3({
   // leva処理(全体)
   const options = useMemo(() => {
     return {
-      x: { value: position[0], min: 0, max: Math.PI * 2, step: 0.01 },
-      y: { value: position[1], min: 0, max: Math.PI * 2, step: 0.01 },
-      z: { value: position[2], min: 0, max: Math.PI * 2, step: 0.01 },
+      x: { value: position[0], min: 0, max: 100, step: 0.01 },
+      y: { value: position[1], min: 0, max: 100, step: 0.01 },
+      z: { value: position[2], min: 0, max: 100, step: 0.01 },
       rx: {
         value: -Math.PI / 2,
         min: -Math.PI / 2,
@@ -50,14 +50,6 @@ export default function boxBool3({
         <Subtraction
           position={[pBase.x, pBase.y, pBase.z]}
           rotation={[pBase.rx, pBase.ry, pBase.rz]}
-          scale={[pBase.size / 1.2, pBase.size / 1.2, pBase.size]}
-        >
-          <boxGeometry args={[1, 1, 1]} />
-        </Subtraction>
-
-        <Subtraction
-          position={[pBase.x, pBase.y, pBase.z]}
-          rotation={[pBase.rx, pBase.ry + Math.PI / 2, pBase.rz]}
           scale={[pBase.size / 1.2, pBase.size / 1.2, pBase.size * 2]}
         >
           <boxGeometry args={[1, 1, 1]} />
@@ -65,8 +57,16 @@ export default function boxBool3({
 
         <Subtraction
           position={[pBase.x, pBase.y, pBase.z]}
-          rotation={[pBase.rx + Math.PI / 2, pBase.ry, pBase.rz]}
-          scale={[pBase.size / 1.2, pBase.size / 1.2, pBase.size * 2]}
+          rotation={[pBase.rx, pBase.ry, pBase.rz]}
+          scale={[pBase.size / 1.2, pBase.size * 2, pBase.size / 1.2]}
+        >
+          <boxGeometry args={[1, 1, 1]} />
+        </Subtraction>
+
+        <Subtraction
+          position={[pBase.x, pBase.y, pBase.z]}
+          rotation={[pBase.rx, pBase.ry, pBase.rz]}
+          scale={[pBase.size * 2, pBase.size / 1.2, pBase.size / 1.2]}
         >
           <boxGeometry args={[1, 1, 1]} />
         </Subtraction>

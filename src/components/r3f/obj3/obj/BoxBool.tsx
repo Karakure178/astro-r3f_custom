@@ -19,9 +19,9 @@ export default function boxBool({
   // leva処理(全体)
   const options = useMemo(() => {
     return {
-      x: { value: position[0], min: 0, max: Math.PI * 2, step: 0.01 },
-      y: { value: position[1], min: 0, max: Math.PI * 2, step: 0.01 },
-      z: { value: position[2], min: 0, max: Math.PI * 2, step: 0.01 },
+      x: { value: position[0], min: 0, max: 100, step: 0.01 },
+      y: { value: position[1], min: 0, max: 100, step: 0.01 },
+      z: { value: position[2], min: 0, max: 100, step: 0.01 },
       rx: {
         value: -Math.PI / 2,
         min: -Math.PI / 2,
