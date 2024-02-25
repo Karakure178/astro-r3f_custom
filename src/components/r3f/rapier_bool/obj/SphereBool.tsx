@@ -12,11 +12,11 @@ import { useControls } from "leva";
 import { Geometry, Base, Subtraction } from "@react-three/csg";
 import { MeshTransmissionMaterial } from "@react-three/drei";
 
-export default function Tori({
-  args = [5, 10, 32, 1, false],
+export default function SphereBool({
+  args = [1, 32, 16, 0, Math.PI * 2, 0, Math.PI * 2],
   position = [0, 0, 0],
   size = 1,
-  objectName = "Tori",
+  objectName = "Sphere",
 }) {
   // leva処理(全体)
   const options = useMemo(() => {
@@ -36,9 +36,12 @@ export default function Tori({
       color: { value: "fff" },
 
       radius: { value: args[0], min: 0, max: 100, step: 0.01 },
-      height: { value: args[1], min: 0, max: 100, step: 0.01 },
-      radialSegments: { value: args[2], min: 0, max: 100, step: 1 },
-      tubularSegments: { value: args[3], min: 0, max: 100, step: 1 },
+      widthSegments: { value: args[1], min: 3, max: 100, step: 0.01 },
+      heightSegments: { value: args[2], min: 2, max: 100, step: 0.01 },
+      phiStart: { value: args[3], min: 0, max: 100, step: 1 },
+      phiLength: { value: args[4], min: 0, max: 100, step: 1 },
+      thetaStart: { value: args[5], min: 0, max: 100, step: 1 },
+      thetaLength: { value: args[6], min: 0, max: 100, step: 1 },
     };
   }, [position, args, size]);
   const pBase = useControls(objectName, options);
@@ -51,58 +54,47 @@ export default function Tori({
           rotation={[pBase.rx, pBase.ry, pBase.rz]}
           scale={[pBase.size, pBase.size, pBase.size]}
         >
-          <cylinderGeometry
+          <sphereGeometry
             args={[
               pBase.radius,
-              pBase.radius,
-              pBase.height,
-              pBase.radialSegments,
-              pBase.tubularSegments,
-              args[4],
+              pBase.widthSegments,
+              pBase.heightSegments,
+              pBase.phiStart,
+              pBase.phiLength,
+              pBase.thetaStart,
+              pBase.thetaLength,
             ]}
           />
         </Base>
 
-        {/* 下が切り抜き */}
         <Subtraction
-          position={[pBase.x, pBase.y, pBase.z]}
+          position={[pBase.x, 0.9, pBase.z]}
           rotation={[pBase.rx, pBase.ry, pBase.rz]}
-          scale={[pBase.size / 1.1, pBase.size / 1, pBase.size / 1.1]}
+          scale={[pBase.size / 1.1, pBase.size / 1.1, pBase.size / 1.1]}
         >
-          <cylinderGeometry
+          <sphereGeometry
             args={[
               pBase.radius,
-              pBase.radius,
-              pBase.height,
-              pBase.radialSegments,
-              pBase.tubularSegments,
-              args[4],
+              pBase.widthSegments,
+              pBase.heightSegments,
+              pBase.phiStart,
+              pBase.phiLength,
+              pBase.thetaStart,
+              pBase.thetaLength,
             ]}
           />
         </Subtraction>
       </Geometry>
 
       <MeshTransmissionMaterial
-        transmissionSampler={false}
-        backside={true}
-        backsideThickness={2}
         resolution={1024}
-        backsideResolution={512}
-        transmission={1}
-        ior={1.5}
-        chromaticAberration={0.4}
-        anisotropy={0.3}
-        distortion={0.0}
-        distortionScale={0.3}
-        temporalDistortion={0.65}
-        attenuationDistance={0.5}
-        clearcoat={0}
-        attenuationColor={"#ffffff"}
-        color={pBase.color}
-        samples={13}
-        thickness={0.5}
-        roughness={0.2}
+        samples={16}
+        thickness={1}
+        roughness={0.5}
         envMapIntensity={1}
+        transmission={0}
+        metalness={0}
+        color={pBase.color}
       />
     </mesh>
   );
