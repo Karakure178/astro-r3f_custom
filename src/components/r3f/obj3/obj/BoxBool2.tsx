@@ -1,4 +1,4 @@
-/** boxのくり抜きオブジェクトを作成する1
+/** boxのくり抜きオブジェクトを作成する2
  * 実装参考
  * https://threejs.org/docs/#api/en/geometries/BoxGeometry
  *
@@ -10,11 +10,11 @@ import { useControls } from "leva";
 import { Geometry, Base, Subtraction, Addition } from "@react-three/csg";
 import { MeshTransmissionMaterial } from "@react-three/drei";
 
-export default function boxBool({
+export default function boxBool2({
   position = [0, 0, 0],
   size = 1,
-  objectName = "box",
-  subName = "subBox",
+  objectName = "box2",
+  subName = "subBox2",
 }) {
   // leva処理(全体)
   const options = useMemo(() => {
@@ -63,7 +63,7 @@ export default function boxBool({
         <Subtraction
           position={[pBase.x, pBase.y, pBase.z]}
           rotation={[pBase.rx, pBase.ry, pBase.rz]}
-          scale={[pBase.size / 1.2, pBase.size / 1.2, pBase.size / 1.2]}
+          scale={[pBase.size / 1.2, pBase.size / 1.2, pBase.size]}
         >
           <boxGeometry args={[1, 1, 1]} />
         </Subtraction>
@@ -71,7 +71,7 @@ export default function boxBool({
         {/* scale={[2, 2, 0.1]} position={[0, 0.5, 0]} */}
 
         <Subtraction
-          position={[pSub.x + 0.75, pSub.y + 0.5, pSub.z]}
+          position={[pSub.x, pSub.y, pSub.z]}
           scale={[pSub.sx, pSub.sy, pSub.sz]}
         >
           <boxGeometry args={[1, 1, 1]} />

@@ -13,6 +13,8 @@ import "./Fragments.scss";
 // 以下、各種オブジェクトのインポート
 import World from "./background/World";
 import BoxBool from "./obj/BoxBool";
+import BoxBool2 from "./obj/BoxBool2";
+import BoxBool3 from "./obj/BoxBool3";
 
 // シーンを設定する
 const Scene = () => {
@@ -84,6 +86,21 @@ export default function App() {
         <World />
         {/* 反射強め系 */}
         <BoxBool position={[0, 0.5, 0]} objectName={"box_1"}></BoxBool>
+        {/* <BoxBool
+          position={[1.5, 0.5, 0]}
+          objectName={"box_2"}
+          subName={"box_2sub"}
+        ></BoxBool> */}
+        <BoxBool2
+          position={[1.5, 0.5, 0]}
+          objectName={"box_2"}
+          subName={"box_2sub"}
+        ></BoxBool2>
+        <BoxBool3
+          position={[3, 0.5, 0]}
+          objectName={"box_3"}
+          subName={"box_3sub"}
+        ></BoxBool3>
       </Canvas>
     </div>
   );
