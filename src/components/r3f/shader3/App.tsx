@@ -3,21 +3,22 @@
  *
  */
 
-import { useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useFrame, Canvas, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
 import { CameraControls, Environment, SoftShadows } from "@react-three/drei";
 
+import { map } from "@assets/ts/libs/map";
 import "./Fragments.scss";
 
 // 以下、各種オブジェクトのインポート
 import World from "./background/World";
-import BoxBool from "./obj/BoxBool";
-import BoxBool2 from "./obj/BoxBool2";
-import BoxBool3 from "./obj/BoxBool3";
-import BoxBool4 from "./obj/BoxBool4";
-import BoxBool5 from "./obj/BoxBool5";
-import BoxBool6 from "./obj/BoxBool6";
+import Box1 from "./mat/Box1";
+import Box2 from "./mat/Box2";
+import Box3 from "./mat/Box3";
+import Box4 from "./mat/Box4";
+import Box5 from "./mat/Box5";
+import Box6 from "./mat/Box6";
 
 // シーンを設定する
 const Scene = () => {
@@ -88,35 +89,22 @@ export default function App() {
         {/* 以下  通常の配置計算 */}
         <World />
         {/* 反射強め系 */}
-        <BoxBool position={[0, 0.5, 0]} objectName={"box_1"}></BoxBool>
-        <BoxBool2
-          position={[1.5, 0.5, 0]}
-          objectName={"box_2"}
-          subName={"box_2sub"}
-        ></BoxBool2>
-        <BoxBool3
-          position={[3, 0.5, 0]}
-          objectName={"box_3"}
-          subName={"box_3sub"}
-        ></BoxBool3>
+        <Box1 position={[0, 0.5, 0]} objectName={{ name: "box1" }}></Box1>
 
-        <BoxBool4
-          position={[4.5, 0.5, 0]}
-          objectName={"box_4"}
-          subName={"box_4sub"}
-        ></BoxBool4>
+        {/* すりガラス系 */}
+        <Box2 position={[1.5, 0.5, 0]} objectName={{ name: "box2" }} />
 
-        <BoxBool5
-          position={[6, 0.5, 0]}
-          objectName={"box_5"}
-          subName={"box_5sub"}
-        ></BoxBool5>
+        {/* プラスチック系 */}
+        <Box3 position={[3, 0.5, 0]} objectName={{ name: "box3" }} />
 
-        <BoxBool6
-          position={[7.5, 0.5, 0]}
-          objectName={"box_6"}
-          subName={"box_6sub"}
-        ></BoxBool6>
+        {/* sample系 */}
+        <Box4 position={[4.5, 0.5, 0]} objectName={{ name: "box4" }} />
+
+        {/* 反射がきれい系 */}
+        <Box5 position={[6, 0.5, 0]} objectName={{ name: "box5" }} />
+
+        {/* box2とbox5のあいのこ系 */}
+        <Box6 position={[7.5, 0.5, 0]} objectName={{ name: "box6" }} />
       </Canvas>
     </div>
   );

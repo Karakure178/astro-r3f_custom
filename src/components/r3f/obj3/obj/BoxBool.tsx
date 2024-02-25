@@ -39,30 +39,26 @@ export default function boxBool({
   // leva処理(くり抜き部分、部分的編)
   const options2 = useMemo(() => {
     return {
-      x: { value: position[0], min: 0, max: Math.PI * 2, step: 0.01 },
-      y: { value: position[1], min: 0, max: Math.PI * 2, step: 0.01 },
-      z: { value: position[2], min: 0, max: Math.PI * 2, step: 0.01 },
       sx: { value: 2, min: 0, max: 100, step: 0.01 },
-      sy: { value: 2, min: 0, max: 100, step: 0.01 },
-      sz: { value: 0.4, min: 0, max: 100, step: 0.01 },
+      sy: { value: 0.4, min: 0, max: 100, step: 0.01 },
+      sz: { value: 2, min: 0, max: 100, step: 0.01 },
     };
   }, [position]);
   const pSub = useControls(subName, options2);
 
   return (
-    <mesh castShadow receiveShadow>
+    <mesh
+      castShadow
+      receiveShadow
+      rotation={[pBase.rx, pBase.ry, pBase.rz]}
+      position={[pBase.x, pBase.y, pBase.z]}
+    >
       <Geometry>
-        <Base
-          position={[pBase.x, pBase.y, pBase.z]}
-          rotation={[pBase.rx, pBase.ry, pBase.rz]}
-          scale={[pBase.size, pBase.size, pBase.size]}
-        >
+        <Base scale={[pBase.size, pBase.size, pBase.size]}>
           <boxGeometry args={[1, 1, 1]} />
         </Base>
 
         <Subtraction
-          position={[pBase.x, pBase.y, pBase.z]}
-          rotation={[pBase.rx, pBase.ry, pBase.rz]}
           scale={[pBase.size / 1.2, pBase.size / 1.2, pBase.size / 1.2]}
         >
           <boxGeometry args={[1, 1, 1]} />
@@ -71,7 +67,7 @@ export default function boxBool({
         {/* scale={[2, 2, 0.1]} position={[0, 0.5, 0]} */}
 
         <Subtraction
-          position={[pSub.x + 0.75, pSub.y + 0.5, pSub.z]}
+          position={[0.75, 0, 0]}
           scale={[pSub.sx, pSub.sy, pSub.sz]}
         >
           <boxGeometry args={[1, 1, 1]} />
