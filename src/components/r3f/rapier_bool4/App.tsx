@@ -1,6 +1,6 @@
 /**
- * たくさんのオブジェクトをランダムに落下させる
- *
+ * ランダムに配置したオブジェクトが真ん中に引き寄せられる
+ * 実装参考：https://codesandbox.io/embed/bestservedbold-christmas-baubles-forked-8hyxyb?codemirror=1
  */
 
 import { Perf } from "r3f-perf";
@@ -12,7 +12,6 @@ import { map } from "@assets/ts/libs/map";
 import { useControls } from "leva";
 import { CameraControls, Environment, SoftShadows } from "@react-three/drei";
 
-import WhiteShape from "./Box";
 import World from "./background/World";
 import Boxes from "./rapier/Boxes";
 import Boxes2 from "./rapier/Boxes2";
@@ -61,7 +60,7 @@ const Scene = () => {
       <CameraControls makeDefault />
 
       {enabled && <SoftShadows {...config} />}
-      <fog attach="fog" args={["black", 0, 40]} />
+      <fog attach="fog" args={["white", 0, 40]} />
       <Environment preset="city" />
     </>
   );
@@ -91,7 +90,7 @@ export default function App() {
   const opsions = "orange";
   const colorBox = ["#F4538A", "#387ADF", "#333A73", "#F4A259", "#F4A259"];
   const colors = [];
-  const num = 10;
+  const num = 30;
   const positions = [];
   const scales = [];
   const jotais = []; // どれかのオブジェクトを選択する
@@ -100,11 +99,11 @@ export default function App() {
   for (let i = 0; i < num; i++) {
     positions.push([
       map(Math.random(), 0, 1, -3, 3),
-      map(Math.random(), 0, 1, 8, 10),
+      map(Math.random(), 0, 1, 2, 5),
       map(Math.random(), 0, 1, -3, 3),
     ]);
 
-    const scale = map(Math.random(), 0, 1, 0.5, 3);
+    const scale = map(Math.random(), 0, 1, 0.5, 1);
     scales.push([scale, scale, scale]);
 
     const jotai = Math.floor(map(Math.random(), 0, 1, 1, 5));
@@ -141,9 +140,8 @@ export default function App() {
         {/* 物理演算する場合の記載はこちら(床付き) */}
         <World>
           <template slot="object">
-            {list}
             {/* box(boolean使用) */}
-            <WhiteShape position={[0, 0.4, 0]} />
+            {list}
           </template>
         </World>
 
