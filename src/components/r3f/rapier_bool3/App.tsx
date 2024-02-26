@@ -18,6 +18,7 @@ import Boxes from "./rapier/Boxes";
 import Boxes2 from "./rapier/Boxes2";
 import Boxes3 from "./rapier/Boxes3";
 import Boxes4 from "./rapier/Boxes4";
+import Boxes5 from "./rapier/Boxes5";
 
 import "./Fragments.scss";
 
@@ -66,28 +67,60 @@ const Scene = () => {
   );
 };
 
-// 条件分岐するオブジェクト
-const RandomObj = (jotai = 1) => {
-  //
+// 条件分岐するオブジェクト関数
+const RandomObj = ({ jotai = 1, color = "fff", ...props }) => {
+  return (
+    <>
+      {jotai === 1 ? (
+        <Boxes colors={color} {...props} jotai={2} />
+      ) : jotai === 2 ? (
+        <Boxes2 colors={color} {...props} jotai={2} />
+      ) : jotai === 3 ? (
+        <Boxes3 colors={color} {...props} jotai={2} />
+      ) : jotai === 4 ? (
+        <Boxes4 colors={color} {...props} jotai={2} />
+      ) : (
+        <Boxes5 colors={color} {...props} jotai={2} />
+      )}
+    </>
+  );
 };
 
 // 本体
 export default function App() {
   const opsions = "orange";
+  const colorBox = ["#F4538A", "#387ADF", "#333A73", "#F4A259", "#F4A259"];
+  const colors = [];
   const num = 10;
   const positions = [];
+  const scales = [];
+  const jotais = []; // どれかのオブジェクトを選択する
 
-  // positionsをここで設定する
+  // オブジェクトのposition/scale/jotai/colorをここで設定する
   for (let i = 0; i < num; i++) {
     positions.push([
       map(Math.random(), 0, 1, -3, 3),
       map(Math.random(), 0, 1, 8, 10),
       map(Math.random(), 0, 1, -3, 3),
     ]);
+
+    const scale = map(Math.random(), 0, 1, 0.5, 3);
+    positions.push([scale, scale, scale]);
+
+    const jotai = Math.floor(map(Math.random(), 0, 1, 1, 5));
+    jotais.push(jotai);
+
+    const color = colorBox[Math.floor(map(Math.random(), 0, 1, 0, 5))];
+    colors.push(color);
   }
 
   const list = positions.map((position, index) => (
-    <Boxes2 position={position} colors={opsions} />
+    <RandomObj
+      position={position}
+      color={colors[index]}
+      jotai={jotais[index]}
+      scale={scales[index]}
+    />
   ));
 
   return (
@@ -108,25 +141,7 @@ export default function App() {
         {/* 物理演算する場合の記載はこちら(床付き) */}
         <World>
           <template slot="object">
-            <Boxes position={[0, 13, 0]} colors={opsions} />
-            <Boxes2
-              position={[-2, 10, 2]}
-              colors={"#F4538A"}
-              size={[1, 1, 1]}
-            />
-            <Boxes3
-              position={[0, 10, 0]}
-              colors={"#387ADF"}
-              size={[0.5, 0.5, 0.5]}
-              jotai={2}
-            />
-            <Boxes4
-              position={[2, 10, 2]}
-              colors={"333A73"}
-              size={[0.5, 0.5, 0.5]}
-              jotai={3}
-            />
-
+            {list}
             {/* box(boolean使用) */}
             <WhiteShape position={[0, 0.4, 0]} />
           </template>
