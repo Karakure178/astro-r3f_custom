@@ -7,12 +7,12 @@
 import { RigidBody } from "@react-three/rapier";
 import { MeshTransmissionMaterial } from "@react-three/drei";
 
-const Boxes = ({ colors, ...props }) => {
-  console.log(colors);
-  console.log(props);
+const Boxes = ({ colors = "orange", ...props }) => {
+  // console.log(colors);
+  // console.log(props);
   return (
     <>
-      <RigidBody mass={1}>
+      <RigidBody mass={0.01}>
         <group scale={[0.3, 0.3, 0.3]}>
           <mesh {...props} castShadow>
             <boxGeometry args={[1, 1, 1]} />

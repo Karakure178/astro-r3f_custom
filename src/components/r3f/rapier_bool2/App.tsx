@@ -14,7 +14,7 @@
  *
  */
 
-import { RigidBody } from "@react-three/rapier";
+import { Perf } from "r3f-perf";
 
 import { useRef, useEffect } from "react";
 import { useFrame, Canvas, useThree } from "@react-three/fiber";
@@ -28,6 +28,7 @@ import World from "./background/World";
 import Boxes from "./rapier/Boxes";
 import Boxes2 from "./rapier/Boxes2";
 import Boxes3 from "./rapier/Boxes3";
+import Boxes4 from "./rapier/Boxes4";
 
 import "./Fragments.scss";
 
@@ -112,21 +113,29 @@ export default function App() {
           position: [0, 0, 10],
         }}
       >
+        <Perf />
         <Scene />
 
         {/* 物理演算する場合の記載はこちら(床付き) */}
         <World>
           <template slot="object">
-            <Boxes position={[0, 10, 0]} colors={opsions} />
+            <Boxes position={[0, 13, 0]} colors={opsions} />
             <Boxes2
-              position={[0, 10, 0]}
-              colors={opsions}
-              size={[0.3, 0.3, 0.3]}
+              position={[-2, 10, 2]}
+              colors={"#F4538A"}
+              size={[1, 1, 1]}
             />
             <Boxes3
               position={[0, 10, 0]}
-              colors={opsions}
+              colors={"#387ADF"}
               size={[0.5, 0.5, 0.5]}
+              jotai={2}
+            />
+            <Boxes4
+              position={[2, 10, 2]}
+              colors={"333A73"}
+              size={[0.5, 0.5, 0.5]}
+              jotai={3}
             />
 
             {/* box(boolean使用) */}

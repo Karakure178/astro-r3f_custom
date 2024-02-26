@@ -4,7 +4,7 @@
 
 import { MeshTransmissionMaterial } from "@react-three/drei";
 
-export default function Glass() {
+export default function Glass({ color = "#ffffff" }) {
   return (
     <MeshTransmissionMaterial
       transmissionSampler={false}
@@ -22,7 +22,7 @@ export default function Glass() {
       attenuationDistance={0.5}
       clearcoat={0}
       attenuationColor={"#ffffff"}
-      color={"fff"}
+      color={color}
       samples={10}
       thickness={0.5}
       roughness={0.2}
