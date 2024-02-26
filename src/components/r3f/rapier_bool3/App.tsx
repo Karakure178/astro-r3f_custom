@@ -1,16 +1,5 @@
-// 実装参考
 /**
- * 背景色/シャドウ回り,静的物体(床)の設定
- * https://codesandbox.io/p/sandbox/bruno-simons-20k-challenge-857z1i?file=%2Fsrc%2FApp.js%3A6%2C45-6%2C67
- *
- * シャドウ(結構遅めに反映されるやつ)
- * https://codesandbox.io/p/sandbox/baking-soft-shadows-hxcc1x?file=%2Fsrc%2FApp.js%3A21%2C43
- *
- * マテリアル系
- * https://codesandbox.io/p/sandbox/multi-select-edges-ny3p4?file=%2Fsrc%2FApp.js%3A19%2C57
- *
- * オブジェクトに対する配列回り：
- * https://devsakaso.com/react-control-syntax/
+ * たくさんのオブジェクトをランダムに落下させる
  *
  */
 
@@ -75,6 +64,11 @@ const Scene = () => {
       <Environment preset="city" />
     </>
   );
+};
+
+// 条件分岐するオブジェクト
+const RandomObj = (jotai = 1) => {
+  //
 };
 
 // 本体
