@@ -1,0 +1,20 @@
+---
+import App from "@components/r3f/obj5/App.tsx";
+import Base from "@layouts/base.astro";
+---
+
+<Base title="Astro">
+  <App client:load />
+</Base>
+
+<style>
+  html,
+  body,
+  #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #2b2b33;
+  }
+</style>
