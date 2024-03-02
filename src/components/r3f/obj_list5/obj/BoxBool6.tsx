@@ -5,15 +5,21 @@
  */
 
 import * as THREE from "three";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, createRef, forwardRef } from "react";
 import { Geometry, Base, Subtraction, Addition } from "@react-three/csg";
 import { MeshTransmissionMaterial } from "@react-three/drei";
 
-const boxBool6 = ({ size = 1, colors = "black", ...props }) => {
+const BoxBool6 = forwardRef(({ size = 1, colors = "black", ...props }, ref) => {
   const sMax = 2;
   const sSmall = 0.3;
   return (
-    <mesh castShadow receiveShadow scale={[size, size, size]} {...props}>
+    <mesh
+      castShadow
+      receiveShadow
+      scale={[size, size, size]}
+      {...props}
+      ref={ref}
+    >
       <Geometry>
         <Base>
           <boxGeometry args={[1, 1, 1]} />
@@ -60,6 +66,6 @@ const boxBool6 = ({ size = 1, colors = "black", ...props }) => {
       />
     </mesh>
   );
-};
+});
 
-export default boxBool6;
+export default BoxBool6;

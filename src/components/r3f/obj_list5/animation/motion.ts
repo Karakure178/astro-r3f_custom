@@ -6,11 +6,11 @@ import gsap from "gsap";
  * @return {object} frame - モーションのフレーム(0-1)
  */
 export const motions = () => {
-  const easing_str = "quint.inOut";
-  const duration = 2;
+  const easing_str = "quad.inOut";
+  const duration = 1;
   const frame = { count: 0 };
 
-  const tl = gsap.timeline({ repeat: -1, yoyo: false });
+  const tl = gsap.timeline({ repeat: -1, yoyo: true });
   tl.to(frame, {
     count: 1,
     duration: duration,
