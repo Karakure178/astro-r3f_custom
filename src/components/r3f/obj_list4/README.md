@@ -3,6 +3,20 @@
 
 ![image](./thumbnil.png)
 
-### 実装参考
-
-https://codesandbox.io/p/sandbox/r3f-orbit-controls-un2oh?file=%2Fsrc%2Findex.js%3A3%2C18-3%2C25
+### フォルダ構造紹介
+以下のようにファイル分けをおこなった。
+```
+|_ animation
+    |_motion.ts
+    |_GridAnime.tsx
+|_ background
+    |_World.tsx
+    |_Camera.tsx
+|_ mat
+    |_Glass.tsx
+|_ obj
+    |_BoxBool3.tsx
+    |_BoxBool6.tsx
+    |_RandomObj.tsx
+|_ App.tsx
+```

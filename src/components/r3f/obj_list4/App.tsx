@@ -2,8 +2,7 @@
  * ただ立方体をグリッド上に配置するだけのコンポーネント
  */
 
-import { useEffect, useMemo, useRef } from "react";
-import { useFrame, Canvas } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { useControls, Leva } from "leva";
 import { Environment, SoftShadows } from "@react-three/drei";
 
@@ -12,6 +11,7 @@ import "./Fragments.scss";
 // 以下、各種オブジェクトのインポート
 import World from "./background/World";
 import GridAnime from "./animation/GridAnime";
+import Camera from "./background/Camera";
 
 // シーンを設定する
 const Scene = () => {
@@ -22,7 +22,6 @@ const Scene = () => {
     samples: { value: 10, min: 1, max: 20, step: 1 },
   });
 
-  //useFrame(({ clock }) => {});
   return (
     <>
       {/* 背景色を決める */}
@@ -48,43 +47,31 @@ const Scene = () => {
   );
 };
 
-/**
- *
- */
-const Apps = () => {
-  //useFrame(({ clock }) => {});
-
-  return (
-    <Canvas
-      shadows
-      camera={{
-        fov: 50,
-        aspect: 1,
-        near: 0.01,
-        far: 1000,
-        position: [0, 5, 10],
-      }}
-    >
-      <Scene />
-      <World />
-      <GridAnime />
-    </Canvas>
-  );
-};
-
 // 本体
 export default function App() {
-  return <Apps />;
-  // return (
-  //   // <div className="container">
-  //     {/*   位置を変えられる
-  //     https://github.com/pmndrs/leva/issues/302#issuecomment-1033904324
-  //     https://github.com/pmndrs/leva/discussions/353
-  //           非表示
-  //     https://github.com/pmndrs/leva/issues/440
-  //     */}
-  //     // <Leva titleBar={{ position: { x: -100, y: 100 } }} hidden />
-  //     <Apps />
-  //   // </div>
-  // );
+  return (
+    <div className="container">
+      {/*   位置を変えられる
+      https://github.com/pmndrs/leva/issues/302#issuecomment-1033904324
+      https://github.com/pmndrs/leva/discussions/353
+            非表示:https://github.com/pmndrs/leva/issues/440
+      */}
+      <Leva titleBar={{ position: { x: -100, y: 100 } }} hidden />
+      <Canvas
+        shadows
+        camera={{
+          fov: 50,
+          aspect: 1,
+          near: 0.01,
+          far: 1000,
+          position: [0, 5, 10],
+        }}
+      >
+        <Camera />
+        <Scene />
+        <World />
+        <GridAnime />
+      </Canvas>
+    </div>
+  );
 }
