@@ -1,12 +1,17 @@
 /**
- * ただ立方体をグリッド上に配置するだけのコンポーネント
+ * ポストプロセッシングの実装
+ * https://codesandbox.io/p/sandbox/glitch-i8zzx
+ * https://qiita.com/nemutas/items/72ae87d84b4cbc12601c
+ * https://codesandbox.io/p/sandbox/session-10-standard-effectcomposer-bloom-hhic2t?file=%2Fsrc%2FApp.js%3A7%2C1
  */
 
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree, useFrame, extend } from "@react-three/fiber";
 import { useControls, Leva } from "leva";
-import { Environment, SoftShadows } from "@react-three/drei";
+import { Environment, SoftShadows, Effects } from "@react-three/drei";
 import { Vector2, ShaderMaterial, TextureLoader, DoubleSide } from "three";
-import { useRef } from "react";
+import { useRef, useEffect, useMemo } from "react";
+
+import { UnrealBloomPass } from "three-stdlib";
 
 import "./Fragments.scss";
 
@@ -14,6 +19,8 @@ import "./Fragments.scss";
 import World from "./background/World";
 import GridAnime from "./animation/GridAnime";
 import Camera from "./background/Camera";
+// import Effect from "./shader/Effect";
+extend({ UnrealBloomPass });
 
 // シーンを設定する
 const Scene = () => {
@@ -27,6 +34,9 @@ const Scene = () => {
   return (
     <>
       {/* 背景色を決める */}
+      <Effects disableGamma>
+        <unrealBloomPass threshold={0} strength={intensity} radius={radius} />
+      </Effects>
       <color attach="background" args={["#50C4ED"]} />
       <ambientLight intensity={0.5} />
       <directionalLight
@@ -52,28 +62,21 @@ const Scene = () => {
 // 本体
 export default function App() {
   return (
-    <div className="container">
-      {/*   位置を変えられる
-      https://github.com/pmndrs/leva/issues/302#issuecomment-1033904324
-      https://github.com/pmndrs/leva/discussions/353
-            非表示:https://github.com/pmndrs/leva/issues/440
-      */}
-      <Leva titleBar={{ position: { x: -100, y: 100 } }} hidden />
-      <Canvas
-        shadows
-        camera={{
-          fov: 50,
-          aspect: 1,
-          near: 0.01,
-          far: 1000,
-          position: [0, 5, 10],
-        }}
-      >
-        <Camera />
-        {/* <Scene /> */}
-        {/* <World /> */}
-        <GridAnime />
-      </Canvas>
-    </div>
+    <Canvas
+      shadows
+      camera={{
+        fov: 50,
+        aspect: 1,
+        near: 0.01,
+        far: 1000,
+        position: [0, 5, 10],
+      }}
+    >
+      <Camera />
+      <Scene />
+      <World />
+      <GridAnime />
+      {/* <Effect /> */}
+    </Canvas>
   );
 }
