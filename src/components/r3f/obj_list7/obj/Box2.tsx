@@ -1,6 +1,6 @@
 import { useLoader } from "@react-three/fiber";
 
-import { Vector2, TextureLoader, DoubleSide, MeshBasicMaterial } from "three";
+import { TextureLoader, MeshBasicMaterial } from "three";
 import { forwardRef } from "react";
 const Box2 = forwardRef(({ size = 1, ...props }, ref) => {
   // 以降テクスチャ絡みの設定
